@@ -9,13 +9,7 @@ stage ('Prepare environment'){
 
   stage('Build UI app'){
    sh label: '', script: 'ng build --prod'  
-  }
-  
-  stage('deploy'){
-   sh label: '', script: '''scp /var/lib/jenkins/workspace/angularnew/package-lock.json ubuntu@13.127.145.118:/home/ubuntu/sre
-'''
-  }
-  
+  } 
 }
 
 
