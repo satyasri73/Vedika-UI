@@ -1,19 +1,52 @@
-node {
-stage ('Prepare environment'){
- git 'https://github.com/satyasri73/Vedika-UI.git'
- }
- 
- stage('install packages and build'){
-  sh label: '', script: 'npm install'
- }
-
-  stage('Build UI app'){
-   sh label: '', script: 'ng build --prod'  
-  } 
-  stage('deploy'){
-  sh label: '', script: '''scp /var/lib/jenkins/workspace/angularnew/package-lock.json ubuntu@35.154.12.87:/home/ubuntu/
-'''
-  }
- } 
-
-
+node{
+   stage('node js installation'){
+	     sh label: '', script: '''#!/bin/bash
+         echo this script done by shiva
+         echo Update system
+         sudo apt update
+         sudo apt -y upgrade
+         echo Add Node.js APT Repository
+         sudo apt update
+         sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+         sudo curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+         echo Install Node.js 12 on Ubuntu / Debian / Linux Mint
+         sudo apt -y install nodejs
+         sudo apt -y  install gcc g++ make
+         echo Confirm Node.js 12 installation by checking the version installed.
+         sudo node --version
+         sudo npm --version
+         echo Install Angular on Ubuntu 18.04
+         sudo npm install -g @angular/cli@9  
+         echo ng version
+         sudo ng --version'''     
+		   }
+     stage('angular code serve in node'){
+         sh label: '', script: 'ssh ubuntu@13.233.146.31'
+         sh label: '', script: '''#!/bin/bash
+         cd /home/ubuntu
+         echo this script done by shiva
+         echo Add Node.js APT Repository
+         sudo apt update
+         sudo apt -y upgrade
+         sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+         sudo curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+         echo Install Node.js 12 on Ubuntu / Debian / Linux Mint
+         sudo apt -y install nodejs
+         sudo apt -y  install gcc g++ make
+         echo Confirm Node.js 12 installation by checking the version installed.
+         sudo node --version
+         sudo npm --version
+         echo Install Angular on Ubuntu 18.04
+         sudo npm install -g @angular/cli@9   
+         echo cloning github url
+         sudo git init
+         sudo git clone https://github.com/hussainaiah/Vedika-UI.git
+         cd Vedika-UI
+         echo node modules installing
+         sudo npm install
+         echo hosting vedikas application
+         sudo ng serve --host 0.0.0.0'''
+         
+         } 
+         
+         }
